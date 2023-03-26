@@ -53,7 +53,7 @@ export default function ButtonAppBar() {
   return (
     <>
       <AppBar position="static" elevation={3}>
-        <Container maxWidth="lg">
+        <Container maxWidth="md">
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
               Anunx
