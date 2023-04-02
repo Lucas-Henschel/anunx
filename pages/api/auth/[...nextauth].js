@@ -1,20 +1,31 @@
-import axios from 'axios'
-import NextAuth from 'next-auth'
-import Providers from 'next-auth/providers'
+import axios from "axios";
+import NextAuth from "next-auth";
+import Providers from "next-auth/providers";
 
 export default NextAuth({  
   providers: [
+    Providers.Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
+    }),
+    
     Providers.Credentials({
       name: 'Credentials',
       async authorize(credentials) {
-        const res = await axios.post('http://localhost:3000/api/auth/signin', credentials)        
-
-        const user = res.data        
+        const res = await axios.post('http://localhost:3000/api/auth/signin', credentials);        
+        const user = res.data;        
 
         if (user) {
-          return user
+          return user;
         } else {
-          throw '/auth/signin?i=1'
+          throw '/auth/signin?i=1';
         }
       }
     })
@@ -28,6 +39,6 @@ export default NextAuth({
   jwt: {
     secret: process.env.JWT_TOKEN,
   },
-
+  
   database: process.env.MONGODB_URI,
 })

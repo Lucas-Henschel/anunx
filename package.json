@@ -27,5 +27,8 @@
     "react-dropzone": "^14.2.3",
     "react-material-ui-carousel": "^3.4.2",
     "yup": "^1.0.2"
+  },
+  "optionalDependencies": {
+    "mongodb": "^5.1.0"
   }
 }
