@@ -131,17 +131,17 @@ const Signup = () => {
                       isSubmitting
                         ? (
                           <CircularProgress className={classes.loading} />
-                        )
-                        : 
+                        ) : (
                           <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
-                            className={classes.submit}
+                            className={classes.submit}                                           
                           >
                             Cadastrar
                           </Button>
+                        )
                     }
                   </form>
                 )
