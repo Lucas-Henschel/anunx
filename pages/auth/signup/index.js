@@ -1,4 +1,6 @@
 import { Formik } from "formik";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 import { 
   Box,
@@ -8,15 +10,33 @@ import {
   InputLabel,
   Input,
   FormHelperText,
-  Button, 
+  Button,
+  CircularProgress, 
 } from "@material-ui/core";
 
 import TemplateDefaulf from "../../../src/templates/Default"; 
-import useStyles from "./style";
 import { initialValues, validationSchema } from "./formValues";
+import useToasty from '../../../src/contexts/Toasty';
+import useStyles from "./style";
 
 const Signup = () => {
   const classes = useStyles();
+  const router = useRouter();
+  const { setToasty } = useToasty();
+
+  const handleFormSubmit = async (values) => {
+    const response = await axios.post('/api/users', values);
+
+    if (response.data.success) {
+      setToasty({
+        open: true,
+        severity: 'success',
+        text: 'Cadastro realizado com sucesso!'
+      })
+
+      router.push('/auth/signin');
+    }
+  }
 
   return (
     <TemplateDefaulf>
@@ -35,9 +55,7 @@ const Signup = () => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log('ok, send ' + values); 
-            }}
+            onSubmit={handleFormSubmit}
           > 
             {
               ({
@@ -46,6 +64,7 @@ const Signup = () => {
                 errors,
                 handleChange,
                 handleSubmit,
+                isSubmitting,
               }) => {
                 return (
                   <form onSubmit={handleSubmit}>
@@ -108,15 +127,22 @@ const Signup = () => {
                       </FormHelperText>
                     </FormControl>
 
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-                    >
-                      Cadastrar
-                    </Button>
+                    {
+                      isSubmitting
+                        ? (
+                          <CircularProgress className={classes.loading} />
+                        )
+                        : 
+                          <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                          >
+                            Cadastrar
+                          </Button>
+                    }
                   </form>
                 )
               }
