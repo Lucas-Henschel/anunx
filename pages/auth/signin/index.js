@@ -1,39 +1,45 @@
-import { Formik } from "formik";
-import axios from "axios";
-import { useRouter } from "next/router";
+import { Formik } from "formik"
+import { useRouter } from "next/router"
+import { signIn, useSession } from "next-auth/client"
 
-import { 
+import {
   Box,
-  Container,  
+  Container,
   Typography,
-  FormControl,
-  InputLabel,
   Input,
+  FormControl,
   FormHelperText,
+  InputLabel,
   Button,
-  CircularProgress, 
-} from "@material-ui/core";
+  CircularProgress,
+} from '@material-ui/core'
 
-import TemplateDefaulf from "../../../src/templates/Default"; 
-import { initialValues, validationSchema } from "./formValues";
-import useToasty from '../../../src/contexts/Toasty';
-import useStyles from "./style";
+import TemplateDefault from '../../../src/templates/Default'
+import { initialValues, validationSchema } from './formValues'
+import useToasty from '../../../src/contexts/Toasty'
+import useStyles from './style'
+import Alert from '@material-ui/lab/Alert'
 
 const Signin = () => {
-  const classes = useStyles();
-  const router = useRouter();
-  const { setToasty } = useToasty();
+  const classes = useStyles()
+  const router = useRouter()
+  const { setToasty } = useToasty()
+  const [ session ] = useSession()
 
-  const handleFormSubmit = async (values) => {
-    
+  const handleFormSubmit = values => {
+    signIn('credentials', {
+      email: values.email,
+      password: values.password,
+      callbackUrl: 'http://localhost:3000/user/dashboard'
+    })
   }
 
   return (
-    <TemplateDefaulf>
-      <Container maxWidth="sm" component="main" className={classes.container}>
+    <TemplateDefault>
+      <Container maxWidth="sm" component="main" className={classes.container}>        
         <Typography component="h1" variant="h2" align="center" color="textPrimary">
           Entre na sua conta
-        </Typography>
+        </Typography>        
       </Container>
 
       <Container maxWidth="md">
@@ -42,7 +48,7 @@ const Signin = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleFormSubmit}
-          > 
+          >
             {
               ({
                 touched,
@@ -50,39 +56,44 @@ const Signin = () => {
                 errors,
                 handleChange,
                 handleSubmit,
-                isSubmitting,
+                isSubmitting,             
               }) => {
                 return (
                   <form onSubmit={handleSubmit}>
+                    {
+                      router.query.i === '1'
+                        ? (
+                          <Alert severity="error" className={classes.errorMessage}>
+                            Usuário ou senha inválidos
+                          </Alert>
+                        )
+                        : null
+                    }
                     <FormControl fullWidth error={errors.email && touched.email} className={classes.formControl}>
-                      <InputLabel>
-                        E-mail
-                      </InputLabel>
-                      <Input 
+                      <InputLabel>E-mail</InputLabel>
+                      <Input
                         name="email"
                         type="email"
                         value={values.email}
                         onChange={handleChange}
                       />
                       <FormHelperText>
-                        { errors.email && touched.email ? errors.email : null }
+                        {errors.email && touched.email ? errors.email : null}
                       </FormHelperText>
                     </FormControl>
 
                     <FormControl fullWidth error={errors.password && touched.password} className={classes.formControl}>
-                      <InputLabel>
-                        Senha
-                      </InputLabel>
-                      <Input 
+                      <InputLabel>Senha</InputLabel>
+                      <Input
                         name="password"
                         type="password"
                         value={values.password}
                         onChange={handleChange}
                       />
                       <FormHelperText>
-                        { errors.password && touched.password ? errors.password : null }
+                        {errors.password && touched.password ? errors.password : null}
                       </FormHelperText>
-                    </FormControl>
+                    </FormControl>                    
 
                     {
                       isSubmitting
@@ -99,7 +110,7 @@ const Signin = () => {
                             Entrar
                           </Button>
                         )
-                    }
+                    }                    
                   </form>
                 )
               }
@@ -107,8 +118,8 @@ const Signin = () => {
           </Formik>
         </Box>
       </Container>
-    </TemplateDefaulf>
+    </TemplateDefault>
   )
 }
 
-export default Signin;
+export default Signin

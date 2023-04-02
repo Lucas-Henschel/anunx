@@ -1,6 +1,6 @@
 import UserModel from "../../src/models/users";
 import dbConnect from "../../src/utils/dbConnect";
-import { cryto } from "../..//src/utils/password";
+import { cryto } from "../../src/utils/password";
 
 const get = async (req, res) => {
   await dbConnect();
