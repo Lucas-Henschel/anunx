@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth";
+import { useSession } from "next-auth/client";
 
 const CheckAuth = ({ Component, pageProps }) => {
   const [ session, loading ] = useSession();

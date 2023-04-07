@@ -7,13 +7,6 @@ export default NextAuth({
     Providers.Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code"
-        }
-      }
     }),
     
     Providers.Credentials({
@@ -38,6 +31,21 @@ export default NextAuth({
 
   jwt: {
     secret: process.env.JWT_TOKEN,
+  },
+
+  callbacks: {
+    async jwt (token, user) {
+      if (user) {
+        token.uid = user.iat;
+      }
+
+      return Promise.resolve(token)
+    },
+
+    async session(session, user) {
+      session.userId = user.iat
+      return session
+    }
   },
   
   database: process.env.MONGODB_URI,
