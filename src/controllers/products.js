@@ -30,12 +30,12 @@ const post = async (req, res) => {
     filesToRename.forEach(file => {
       const timestamp = Date.now();
       const random = Math.floor(Math.random() * 99999999) + 1;
-      const extension = path.extname(file.name) // .jpg ou .png;
+      const extension = path.extname(file.name);
 
       const filename = `${timestamp}_${random}${extension}`;
 
-      const oldpath = path.join(__dirname, `../../../../${file.path}`);
-      const newpath = path.join(__dirname, `../../../../${form.uploadDir}/${filename}`);
+      const oldpath = path.join(__dirname, `../../../../../${file.path}`);
+      const newpath = path.join(__dirname, `../../../../../${form.uploadDir}/${filename}`);
 
       filesToSave.push({
         name: filename,

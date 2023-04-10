@@ -37,6 +37,10 @@ const schema = new mongoose.Schema({
   files: {
     type: [filesSchema],
     default: undefined,
+  },
+
+  created: {
+    type: String,
   }
 });
 

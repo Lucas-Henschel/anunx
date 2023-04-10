@@ -12,7 +12,10 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import Carousel from "react-material-ui-carousel";
 
-import TemplateDefault from "../../src/templates/Default";
+import TemplateDefault from "../../../src/templates/Default";
+import dbConnect from "@/src/utils/dbConnect";
+import ProductsModel from "@/src/models/products";
+import { formatCurrency } from "@/src/utils/currency";
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -39,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Product = () => {
+const Product = ({ product }) => {
   const classes = useStyles();
 
   return (
@@ -59,20 +62,17 @@ const Product = () => {
                   }
                 }}
               >
-                <Card className={classes.card}>
-                  <CardMedia 
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random?a=1"
-                    title="Image title"
-                  />
-                </Card>
-                <Card className={classes.card}>
-                  <CardMedia 
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random?a=2"
-                    title="Image title"
-                  />
-                </Card>
+                {
+                  product.files.map(file => (
+                    <Card key={file.name} className={classes.card}>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image={`/uploads/${file.name}`}
+                        title={product.title}
+                      />
+                    </Card>
+                  ))
+                }
               </Carousel>
             </Box>
 
@@ -86,13 +86,13 @@ const Product = () => {
                 variant="h4"
                 className={classes.productName}
               >
-                Jaguar XE 2.0 D R-Sport Aut.
+                {product.title}
               </Typography>
 
               <Typography component="h4" variant="h4" className={classes.price}>
-                R$ 50.000,00
+                {formatCurrency(product.price)}
               </Typography>
-              <Chip label="Categoria" />
+              <Chip label={product.category} />
             </Box>
 
             <Box className={classes.box} textAlign="left">
@@ -100,7 +100,7 @@ const Product = () => {
                 Descrição
               </Typography>
               <Typography component="p" variant="body2">
-                Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.
+                {product.description}
               </Typography>
             </Box>
           </Grid>
@@ -109,14 +109,16 @@ const Product = () => {
             <Card elevation={0} className={classes.box}>
               <CardHeader
                 avatar={
-                  <Avatar>L</Avatar>
+                  <Avatar src={product.user.image}>
+                    { product.user.name[0] || product.user.image }  
+                  </Avatar>
                 }
-                title="Lucas Gabriel"
-                subheader="lucas@gmail.com"
+                title={product.user.name}
+                subheader={product.user.email}
               />
               <CardMedia  
-                image="https://source.unsplash.com/random"
-                title="Lucas Gabriel"
+                image={product.user.image}
+                title={product.user.name}
               />
             </Card>
 
@@ -131,5 +133,18 @@ const Product = () => {
     </TemplateDefault>
   );
 };
+
+export async function getServerSideProps({ query }) {
+  const { id } = query;
+  await dbConnect();
+
+  const product = await ProductsModel.findOne({ _id: id });
+
+  return {
+    props: {
+      product: JSON.parse(JSON.stringify(product))
+    }
+  }
+}
 
 export default Product;
