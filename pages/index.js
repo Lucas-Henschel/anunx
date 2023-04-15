@@ -1,4 +1,6 @@
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import slugify from "slugify";
 
 import {
@@ -17,6 +19,7 @@ import Card from "../src/components/Card";
 import dbConnect from "@/src/utils/dbConnect";
 import ProductsModel from "../src/models/products";
 import { formatCurrency } from "@/src/utils/currency";
+import Search from "@/src/components/Search";
 
 const useStyles = makeStyles((theme) => ({
   searchBox: {
@@ -37,6 +40,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = ({ products }) => {
   const classes = useStyles();
+  const router = useRouter();
+  const [search, setSearch] = useState();
+
+  const handleSubmitSearch = () => {
+    router.push({
+      pathname: `/search/${search}`,
+    })
+  }
 
   return (
     <TemplateDefault>
@@ -49,12 +60,7 @@ const Home = ({ products }) => {
         >
           O que deseja encontrar?
         </Typography>
-        <Paper className={classes.searchBox}>
-          <InputBase placeholder="Ex.: Iphone 12 com garantia" fullWidth />
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
-        </Paper>
+        <Search />
       </Container>
 
       <Container maxWidth="md" className={classes.cardGrid}>
@@ -73,11 +79,10 @@ const Home = ({ products }) => {
             const title = slugify(product.title).toLocaleLowerCase();
 
             return (
-              <Grid item xs={12} sm={6} md={4}>
-                <Link href={`/${category}/${title}/${product._id}`} passHref>
+              <Grid key={product._id} item xs={12} sm={6} md={4}>
+                <Link href={`/${category}/${title}/${product._id}`} legacyBehavior>
                   <a className={classes.productLink}>
                     <Card
-                      key={product._id}
                       image={`/uploads/${product.files[0].name}`}
                       title={product.title}
                       subtitle={formatCurrency(product.price)}
