@@ -60,6 +60,8 @@ const post = async (req, res) => {
       phone,
       userId,
       image,
+      city,
+      state,
     } = fields;
 
     const product = new ProductsModel({
@@ -75,6 +77,9 @@ const post = async (req, res) => {
         image,
       },
       files: filesToSave,  
+      city,
+      state,
+      created: Date.now(),
     })
 
     const register = await product.save();

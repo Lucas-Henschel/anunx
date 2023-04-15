@@ -1,4 +1,9 @@
-import { IconButton, InputBase, Paper } from "@material-ui/core";
+import {
+  IconButton,
+  InputBase,
+  Paper,
+  CircularProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/search";
 import { useState } from "react";
@@ -19,12 +24,22 @@ const Search = () => {
   const [search, setSearch] = useState();
 
   const handleSubmitSearch = () => {
-    router.push({
-      pathname: `/search/${search}`,
-    })
-  }
+    setClickSearch(true);
 
-  console.log(search);
+    if (search) {
+      router.push({
+        pathname: `/search/${search}`,
+      });
+    }
+  };
+
+  if (typeof document !== "undefined") {
+    document.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        handleSubmitSearch();
+      }
+    });
+  }
 
   return (
     <Paper className={classes.searchBox}>

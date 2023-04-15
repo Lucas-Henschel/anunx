@@ -39,8 +39,18 @@ const schema = new mongoose.Schema({
     default: undefined,
   },
 
-  created: {
+  city: {
     type: String,
+    required: [true, 'O campo "cidade" é obrigatório.'],
+  },
+
+  state: {
+    type: String,
+    required: [true, 'O campo "estado" é obrigatório.'],
+  },
+
+  created: {
+    type: Date,
   }
 });
 

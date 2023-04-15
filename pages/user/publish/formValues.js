@@ -8,6 +8,8 @@ const initialValues = {
   email: '',
   name: '',
   phone: '',
+  city: '',
+  state: '',
   files: []
 }
 
@@ -40,6 +42,12 @@ const validationSchema = yup.object().shape({
   files: yup.array()
     .min(1, 'Envie pelo menos uma foto')
     .required('Campo obrigatório'),    
+  
+  city: yup.string()
+    .required('Campo obrigatório'),
+  
+  state: yup.string()
+    .required('Campo obrigatório'),
 })
 
 export {

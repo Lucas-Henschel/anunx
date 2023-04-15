@@ -1,19 +1,9 @@
-import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import slugify from "slugify";
 
-import {
-  Paper,
-  Container,
-  IconButton,
-  InputBase,
-  Typography,
-  Grid,
-} from "@material-ui/core";
+import { Container, Typography, Grid } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/search";
 import TemplateDefault from "../src/templates/Default";
 import Card from "../src/components/Card";
 import dbConnect from "@/src/utils/dbConnect";
@@ -22,13 +12,6 @@ import { formatCurrency } from "@/src/utils/currency";
 import Search from "@/src/components/Search";
 
 const useStyles = makeStyles((theme) => ({
-  searchBox: {
-    display: "flex",
-    justifyContent: "center",
-    padding: theme.spacing(0, 2),
-    marginTop: 20,
-  },
-
   cardGrid: {
     marginTop: 50,
   },
@@ -36,18 +19,14 @@ const useStyles = makeStyles((theme) => ({
   productLink: {
     textDecoration: "none !important",
   },
+
+  message: {
+    marginTop: '30px',
+  }
 }));
 
 const Home = ({ products }) => {
   const classes = useStyles();
-  const router = useRouter();
-  const [search, setSearch] = useState();
-
-  const handleSubmitSearch = () => {
-    router.push({
-      pathname: `/search/${search}`,
-    })
-  }
 
   return (
     <TemplateDefault>
@@ -80,7 +59,10 @@ const Home = ({ products }) => {
 
             return (
               <Grid key={product._id} item xs={12} sm={6} md={4}>
-                <Link href={`/${category}/${title}/${product._id}`} legacyBehavior>
+                <Link
+                  href={`/${category}/${title}/${product._id}`}
+                  legacyBehavior
+                >
                   <a className={classes.productLink}>
                     <Card
                       image={`/uploads/${product.files[0].name}`}
@@ -93,6 +75,20 @@ const Home = ({ products }) => {
             );
           })}
         </Grid>
+        {
+          products.length === 0 && (
+            <Typography
+              component="div"
+              variant="body1"
+              align="center"
+              color="textPrimary"
+              className={classes.message}
+              gutterBottom
+            >
+              Nenhum anúncio publicado
+            </Typography>
+          )
+        }
       </Container>
     </TemplateDefault>
   );
