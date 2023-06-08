@@ -1,11 +1,11 @@
-import UserModel from "../../src/models/users";
 import dbConnect from "../../src/utils/dbConnect";
 import { cryto } from "../../src/utils/password";
 
 const get = async (req, res) => {
-  await dbConnect();
-  
-  const users = await UserModel.find();
+  const db = await dbConnect();
+  const collection = db.collection('users');
+
+  const users = await collection.find({}).toArray();
   res.status(200).json({ success: true, users })
 }
 
@@ -16,16 +16,16 @@ const post = async (req, res) => {
     password  
   } = req.body;
 
-  await dbConnect();
-
+  const db = await dbConnect();
+  const collection = db.collection('users');
+  
   const passwordCrypto = await cryto(password);
 
-  const user = new UserModel({
+  await collection.insertOne({
     name, 
     email,
     password: passwordCrypto,
   });
-  user.save();
 
   res.status(201).json({ success: true })
 }

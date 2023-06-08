@@ -1,6 +1,7 @@
 import { Formik } from "formik";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import { 
   Box,
@@ -48,6 +49,20 @@ const Signup = () => {
         <Typography component="h5" variant="h5" align="center" color="textPrimary">
           E anuncie para todo o Brasil
         </Typography>
+
+        <Box className={classes.orSeparator}>
+          <span>ou</span>
+        </Box>
+
+        <Link
+          href={`/auth/signin`}
+          legacyBehavior
+          passHref
+        >
+          <a className={classes.formatedLink}>
+            Entre em sua conta
+          </a>
+        </Link>
       </Container>
 
       <Container maxWidth="md">

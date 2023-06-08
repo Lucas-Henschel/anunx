@@ -14,9 +14,9 @@ import Carousel from "react-material-ui-carousel";
 
 import TemplateDefault from "../../../src/templates/Default";
 import dbConnect from "@/src/utils/dbConnect";
-import ProductsModel from "@/src/models/products";
 import { formatCurrency } from "@/src/utils/currency";
 import { dateFormart } from "@/src/utils/dateFormat";
+import { ObjectId } from 'mongodb';
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
 
     width: "100%",
-    maxWidth: 500,
   },
 
   productName: {
@@ -108,7 +107,7 @@ const Product = ({ product }) => {
               <Chip label={product.category} />
             </Box>
 
-            <Box className={classes.box}>
+            <Box className={`${classes.box} ${classes.description}`}>
               <Typography component="h6" variant="h6">
                 Descrição
               </Typography>
@@ -131,10 +130,9 @@ const Product = ({ product }) => {
             </Card>
 
             <Box
-              className={`${classes.box} ${classes.align}`}
-              textAlign="center"
+              className={`${classes.box}`}
             >
-              <Typography component="h6" variant="h6">
+              <Typography component="h6" variant="h6" align="center">
                 Localização
               </Typography>
               <Typography component="h6" variant="h6">
@@ -159,9 +157,10 @@ const Product = ({ product }) => {
 
 export async function getServerSideProps({ query }) {
   const { id } = query;
-  await dbConnect();
+  const db = await dbConnect();
+  const collection = db.collection('products');
 
-  const product = await ProductsModel.findOne({ _id: id });
+  const product = await collection.findOne({ _id: new ObjectId(id) });
 
   return {
     props: {

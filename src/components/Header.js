@@ -68,7 +68,7 @@ export default function ButtonAppBar() {
                 Anunx
               </Typography>
             </Link>
-            <Link href={ session ? '/user/publish' : '/auth/signin' } passHref className={classes.button}>
+            <Link href={ session ? '/user/publish' : '/auth/signup' } passHref className={classes.button}>
               <Button color="inherit" variant="outlined" className={classes.headButton}>
                 Anunciar e Vender
               </Button>

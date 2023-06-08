@@ -19,7 +19,7 @@ const Toasty = ({ open, text, severity, onClose=null }) => {
         horizontal: 'right',
       }}
       open={open}
-      autoHideDuration={6000}
+      autoHideDuration={5000}
       onClose={handleClose}
     >
       <MuiAlert

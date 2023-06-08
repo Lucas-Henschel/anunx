@@ -24,8 +24,6 @@ const Search = () => {
   const [search, setSearch] = useState();
 
   const handleSubmitSearch = () => {
-    setClickSearch(true);
-
     if (search) {
       router.push({
         pathname: `/search/${search}`,

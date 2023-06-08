@@ -16,7 +16,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { getSession } from "next-auth/client";
 
 import dbConnect from "../../src/utils/dbConnect";
-import ProductsModel from "../../src/models/products";
 import TemplateDefault from "../../src/templates/Default";
 import Card from "../../src/components/Card";
 import { formatCurrency } from "../../src/utils/currency";
@@ -166,9 +165,10 @@ Home.requireAuth = true;
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
-  await dbConnect();
+  const db = await dbConnect();
+  const collection = db.collection('products');
 
-  const products = await ProductsModel.find({ "user.id": session.userId });
+  const products = await collection.find({ "user.id": session.userId }).toArray();
 
   return {
     props: {

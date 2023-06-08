@@ -1,8 +1,8 @@
-import nextConnect from 'next-connect'
-import { post } from '../../../src/controllers/auth/signin'
+import nextConnect from 'next-connect';
+import { post } from '../../../src/controllers/auth/signin';
 
-const route = nextConnect()
+const route = nextConnect();
 
-route.post(post)
+route.post(post);
 
-export default route
+export default route;

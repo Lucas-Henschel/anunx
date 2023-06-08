@@ -3,23 +3,19 @@ import {
   Typography,
   Box,
   Grid,
-  IconButton,
-  Paper,
-  InputBase,
 } from "@material-ui/core";
 
 import Link from "next/link";
 import slugify from "slugify";
 
-import SearchIcon from "@material-ui/icons/search";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Card from "../../src/components/Card";
 import TemplateDefault from "../../src/templates/Default";
 import { formatCurrency } from "../../src/utils/currency";
-import ProductsModel from "../../src/models/products";
 
 import Search from "@/src/components/Search";
+import dbConnect from "@/src/utils/dbConnect";
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -99,8 +95,10 @@ const List = ({ products }) => {
 
 export async function getServerSideProps({ query }) {
   const { q } = query;
+  const db = await dbConnect();
+  const collection = db.collection('products');
 
-  const products = await ProductsModel.find({
+  const products = await collection.find({
     $or: [
       {
         title: {
@@ -115,7 +113,7 @@ export async function getServerSideProps({ query }) {
         },
       },
     ],
-  });
+  }).toArray();
 
   return {
     props: {

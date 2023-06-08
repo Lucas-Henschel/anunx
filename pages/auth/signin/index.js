@@ -24,10 +24,6 @@ import Alert from '@material-ui/lab/Alert';
 const Signin = ({ APP_URL }) => {
   const classes = useStyles();
   const router = useRouter();
-  const { setToasty } = useToasty();
-  const [ session ] = useSession();
-
-  console.log(session);
 
   const handleGoogleLogin = () => {
     signIn('google', {
@@ -53,8 +49,7 @@ const Signin = ({ APP_URL }) => {
 
       <Container maxWidth="md">
         <Box className={classes.box}>
-
-          <Box display="flex" justifyContent="center">
+          <Box className={classes.goGoogle}>
             <Button
               variant="contained"
               color="primary"
