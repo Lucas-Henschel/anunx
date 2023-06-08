@@ -52,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: 500,
   },
+
+  text: {
+    wordWrap: "break-word",
+  }
 }));
 
 const Product = ({ product }) => {
@@ -111,7 +115,7 @@ const Product = ({ product }) => {
               <Typography component="h6" variant="h6">
                 Descrição
               </Typography>
-              <Typography variant="body2">{product.description}</Typography>
+              <Typography component="p" variant="p" className={classes.text}>{product.description}</Typography>
             </Box>
           </Grid>
 

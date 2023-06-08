@@ -48,7 +48,7 @@ const Footer = () => {
         <Grid item xs={6} sm={3}>
           <Box textAlign="center">
             <Link
-              href={session ? "/user/publish" : "/auth/signin"}
+              href={session ? "/user/publish" : "/auth/signup"}
               passHref
               className={classes.formatLink}
             >
