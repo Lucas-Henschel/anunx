@@ -1,11 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import formidable from 'formidable-serverless';
-import ProductsModel from '../models/products';
 import dbConnect from '../utils/dbConnect';
 
 const post = async (req, res) => {
-  await dbConnect();
+  const db = await dbConnect();
 
   const form = new formidable.IncomingForm({
     multiples: true,
@@ -64,11 +63,14 @@ const post = async (req, res) => {
       state,
     } = fields;
 
-    const product = new ProductsModel({
+    const priceInt = Number(price);
+    const collection = db.collection('products');
+
+    const product = await collection.insertOne({
       title,
       category,
       description,
-      price,
+      price: priceInt,
       user: {
         id: userId,
         name,
@@ -80,11 +82,9 @@ const post = async (req, res) => {
       city,
       state,
       created: Date.now(),
-    })
+    });
 
-    const register = await product.save();
-
-    if (register) {
+    if (product) {
       res.status(201).json({ success: true });
     } else {
       res.status(500).json({ success: false });
@@ -93,11 +93,11 @@ const post = async (req, res) => {
 }
 
 const remove = async (req, res) => {
-  await dbConnect()
+  const db = await dbConnect();
+  const collection = db.collection('products');
 
-  const id = req.body.id
-
-  const deleted = await ProductsModel.findOneAndRemove({ _id: id })
+  const id = req.body.id;
+  const deleted = await collection.deleteMany({ id: id });
 
   if (deleted) {
     return res.status(200).json({ success: true })

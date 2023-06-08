@@ -41,6 +41,12 @@ const useStyles = makeStyles((theme) => ({
         padding: '0 30px',
       }
   },
+
+  goGoogle: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }
 }))
 
 export default useStyles;

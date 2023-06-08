@@ -7,7 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TemplateDefault from "../src/templates/Default";
 import Card from "../src/components/Card";
 import dbConnect from "@/src/utils/dbConnect";
-import ProductsModel from "../src/models/products";
 import { formatCurrency } from "@/src/utils/currency";
 import Search from "@/src/components/Search";
 
@@ -95,19 +94,16 @@ const Home = ({ products }) => {
 };
 
 export async function getServerSideProps() {
-  await dbConnect();
+  const db = await dbConnect();
+  const collection = db.collection('products');
 
-  const products = await ProductsModel.aggregate([
-    {
-      $sample: { size: 6 },
-    },
-  ]);
+  const products = await collection.find({}).limit(6).toArray();
 
   return {
     props: {
       products: JSON.parse(JSON.stringify(products)),
     },
   };
-}
+} 
 
 export default Home;

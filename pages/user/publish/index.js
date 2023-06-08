@@ -132,7 +132,7 @@ const Publish = ({ userId, image }) => {
                     <FormHelperText>
                       {errors.title && touched.title ? errors.title : null}
                     </FormHelperText>
-                  </FormControl>
+                  </FormControl>  
                   <br />
                   <br />
 
