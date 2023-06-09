@@ -132,7 +132,7 @@ const Publish = ({ userId, image }) => {
                     <FormHelperText>
                       {errors.title && touched.title ? errors.title : null}
                     </FormHelperText>
-                  </FormControl>  
+                  </FormControl>
                   <br />
                   <br />
 
@@ -347,15 +347,21 @@ const Publish = ({ userId, image }) => {
                       <MenuItem value="Goiás">Goiás</MenuItem>
                       <MenuItem value="Maranhão">Maranhão</MenuItem>
                       <MenuItem value="Mato Grosso">Mato Grosso</MenuItem>
-                      <MenuItem value="Mato Grosso do Sul">Mato Grosso do Sul</MenuItem>
+                      <MenuItem value="Mato Grosso do Sul">
+                        Mato Grosso do Sul
+                      </MenuItem>
                       <MenuItem value="Minas Gerais">Minas Gerais</MenuItem>
                       <MenuItem value="Pará">Pará</MenuItem>
                       <MenuItem value="Paraíba">Paraíba</MenuItem>
                       <MenuItem value="Pernambuco">Pernambuco</MenuItem>
                       <MenuItem value="Piauí">Piauí</MenuItem>
                       <MenuItem value="Rio de Janeiro">Rio de Janeiro</MenuItem>
-                      <MenuItem value="Rio Grande do Norte">Rio Grande do Norte</MenuItem>
-                      <MenuItem value="Rio Grande do Sul">Rio Grande do Sul</MenuItem>
+                      <MenuItem value="Rio Grande do Norte">
+                        Rio Grande do Norte
+                      </MenuItem>
+                      <MenuItem value="Rio Grande do Sul">
+                        Rio Grande do Sul
+                      </MenuItem>
                       <MenuItem value="Rondônia">Rondônia</MenuItem>
                       <MenuItem value="Roraima">Roraima</MenuItem>
                       <MenuItem value="Santa Catarina">Santa Catarina</MenuItem>
