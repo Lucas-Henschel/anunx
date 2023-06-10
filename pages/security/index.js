@@ -11,27 +11,21 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     marginBottom: theme.spacing(3),
 
-    width: "80%",
+    width: "100%",
   },
 
   title: {
     marginBottom: theme.spacing(3),
   },
-
-  stretch: {
-    width: 50,
-    height: 200,
-    resizeMode: "stretch",
-  },
 }));
 
-const Product = () => {
+const Security = () => {
   const classes = useStyles();
 
   return (
     <TemplateDefault>
       <Container maxWidth="md">
-        <Grid container>
+        <Grid container spacing={3}>
           <Grid item xs={6}>
             <Box className={classes.box}>
               <Typography component="h4" variant="h4" className={classes.title}>
@@ -49,7 +43,7 @@ const Product = () => {
               src={SecurityImage}
               width={480}
               height={270}
-              alt="Login com Google"
+              alt="Security Image"
             />
           </Grid>
         </Grid>
@@ -58,4 +52,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Security;
