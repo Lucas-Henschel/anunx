@@ -38,7 +38,7 @@ const Footer = () => {
         </Grid>
         <Grid item xs={6} sm={3}>
           <Box textAlign="center">
-            <Link href="/" passHref className={classes.formatLink}>
+            <Link href="/security" passHref className={classes.formatLink}>
               <Typography color="textSecondary" variant="subtitle1">
                 Dicas de segurança
               </Typography>
