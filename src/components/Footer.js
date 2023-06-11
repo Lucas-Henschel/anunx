@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/client";
 
 const useStyles = makeStyles((theme) => ({
-  footer: {
+  container: {
     borderTop: `1px solid ${theme.palette.divider}`,
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
@@ -13,6 +13,17 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: theme.spacing(6),
       paddingBottom: theme.spacing(6),
     },
+  },
+
+  footer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  color: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
   },
 
   formatLink: {
@@ -25,43 +36,59 @@ const Footer = () => {
   const [session] = useSession();
 
   return (
-    <Container maxWidth="md" component="footer" className={classes.footer}>
-      <Grid container spacing={3}>
-        <Grid item xs={6} sm={3}>
-          <Box textAlign="center">
-            <Link href="/" passHref className={classes.formatLink}>
-              <Typography color="textSecondary" variant="subtitle1">
+    <Container maxWidth="md" component="footer" className={classes.container}>
+      <Grid container spacing={3} className={classes.footer}>
+        <Grid item>
+          <Box>
+            <Link href="/help" passHref className={classes.formatLink}>
+              <Typography
+                className={classes.color}
+                color="textSecondary"
+                variant="subtitle1"
+              >
                 Ajuda e Contato
               </Typography>
             </Link>
           </Box>
         </Grid>
-        <Grid item xs={6} sm={3}>
-          <Box textAlign="center">
-            <Link href="/" passHref className={classes.formatLink}>
-              <Typography color="textSecondary" variant="subtitle1">
+        <Grid item>
+          <Box>
+            <Link href="/security" passHref className={classes.formatLink}>
+              <Typography
+                className={classes.color}
+                color="textSecondary"
+                variant="subtitle1"
+              >
                 Dicas de segurança
               </Typography>
             </Link>
           </Box>
         </Grid>
-        <Grid item xs={6} sm={3}>
-          <Box textAlign="center">
+        <Grid item>
+          <Box>
             <Link
               href={session ? "/user/publish" : "/auth/signup"}
               passHref
               className={classes.formatLink}
             >
-              <Typography color="textSecondary" variant="subtitle1">
+              <Typography
+                className={classes.color}
+                color="textSecondary"
+                variant="subtitle1"
+              >
                 Anunciar e Vender
               </Typography>
             </Link>
           </Box>
         </Grid>
-        <Grid item xs={6} sm={3}>
-          <Box textAlign="center">
-            <Link href="/" passHref className={classes.formatLink}>
-              <Typography color="textSecondary" variant="subtitle1">
+        <Grid item>
+          <Box>
+            <Link href="/professional" passHref className={classes.formatLink}>
+              <Typography
+                className={classes.color}
+                color="textSecondary"
+                variant="subtitle1"
+              >
                 Plano Profissional
               </Typography>
             </Link>
