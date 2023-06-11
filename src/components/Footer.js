@@ -60,7 +60,7 @@ const Footer = () => {
         </Grid>
         <Grid item xs={6} sm={3}>
           <Box textAlign="center">
-            <Link href="/" passHref className={classes.formatLink}>
+            <Link href="/professional" passHref className={classes.formatLink}>
               <Typography color="textSecondary" variant="subtitle1">
                 Plano Profissional
               </Typography>

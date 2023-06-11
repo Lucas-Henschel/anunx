@@ -6,6 +6,12 @@ import Image from "next/image";
 import SecurityImage from "../../public/images/security.png";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    alignItems: "center",
+    gap: 30,
+  },
+
   box: {
     backgroundColor: theme.palette.background.white,
     padding: theme.spacing(3),
@@ -25,7 +31,7 @@ const Security = () => {
   return (
     <TemplateDefault>
       <Container maxWidth="md">
-        <Grid container spacing={3}>
+        <Grid container className={classes.container}>
           <Grid item xs={6}>
             <Box className={classes.box}>
               <Typography component="h4" variant="h4" className={classes.title}>
