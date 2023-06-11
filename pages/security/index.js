@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     gap: 30,
   },
 
@@ -17,11 +18,20 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     marginBottom: theme.spacing(3),
 
-    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: 400,
+    },
   },
 
   title: {
     marginBottom: theme.spacing(3),
+  },
+
+  image: {
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: 300,
+      maxHeigth: 150,
+    },
   },
 }));
 
@@ -32,7 +42,7 @@ const Security = () => {
     <TemplateDefault>
       <Container maxWidth="md">
         <Grid container className={classes.container}>
-          <Grid item xs={6}>
+          <Grid item>
             <Box className={classes.box}>
               <Typography component="h4" variant="h4" className={classes.title}>
                 Para nós, segurança é muito importante
@@ -44,13 +54,16 @@ const Security = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={4}>
-            <Image
-              src={SecurityImage}
-              width={480}
-              height={270}
-              alt="Security Image"
-            />
+          <Grid item>
+            <Box>
+              <Image
+                className={classes.image}
+                src={SecurityImage}
+                width={480}
+                height={270}
+                alt="Security Image"
+              />
+            </Box>
           </Grid>
         </Grid>
       </Container>

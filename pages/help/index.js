@@ -9,12 +9,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     justifyContent: "center",
-
-    [theme.breakpoints.down("sm")]: {
-      flexDirection: "column",
-      gap: 20,
-      backgroundColor: "red",
-    },
+    alignItems: "center",
+    gap: 30,
   },
 
   box: {
@@ -31,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
   question: {
     marginBottom: theme.spacing(1),
   },
+
+  image: {
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: 300,
+      maxHeigth: 150,
+    },
+  },
 }));
 
 const Help = () => {
@@ -39,17 +42,20 @@ const Help = () => {
   return (
     <TemplateDefault>
       <Container maxWidth="md">
-        <Grid
-          container
-          className={classes.container}
-          alignItems="center"
-          alignContent="center"
-        >
-          <Grid item xs={4}>
-            <Image src={HelpImage} width={250} height={170} alt="Help Image" />
+        <Grid container className={classes.container}>
+          <Grid item>
+            <Box>
+              <Image
+                className={classes.image}
+                src={HelpImage}
+                width={250}
+                height={170}
+                alt="Help Image"
+              />
+            </Box>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item>
             <Box className={classes.box}>
               <Typography component="h4" variant="h4">
                 Como podemos te ajudar? :)
