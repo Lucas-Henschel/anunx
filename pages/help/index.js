@@ -8,15 +8,19 @@ import HelpImage from "../../public/images/help.jpg";
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
-    alignItems: "center",
+    justifyContent: "center",
+
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      gap: 20,
+      backgroundColor: "red",
+    },
   },
 
   box: {
     backgroundColor: theme.palette.background.white,
     padding: theme.spacing(3),
     marginBottom: theme.spacing(3),
-
-    width: "100%",
   },
 
   title: {
@@ -35,19 +39,17 @@ const Help = () => {
   return (
     <TemplateDefault>
       <Container maxWidth="md">
-        <Grid container spacing={6} className={classes.container}>
+        <Grid
+          container
+          className={classes.container}
+          alignItems="center"
+          alignContent="center"
+        >
           <Grid item xs={4}>
-            <Box>
-              <Image
-                src={HelpImage}
-                width={250}
-                height={170}
-                alt="Help Image"
-              />
-            </Box>
+            <Image src={HelpImage} width={250} height={170} alt="Help Image" />
           </Grid>
 
-          <Grid item xs={8}>
+          <Grid item xs={6}>
             <Box className={classes.box}>
               <Typography component="h4" variant="h4">
                 Como podemos te ajudar? :)
